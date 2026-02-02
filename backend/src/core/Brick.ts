@@ -11,7 +11,7 @@ import {
 type BrickStatus = 'AVAILABLE' | 'RESERVED' | 'SOLD';
 
 interface BrickData {
-  id?: string;
+  id: string;
   property: Property;
   status: BrickStatus;
   ownershipPercentage: number;
@@ -25,7 +25,7 @@ interface BrickData {
 }
 
 class Brick {
-  readonly id?: string;
+  readonly id: string;
   readonly property: Property;
   readonly ownershipPercentage: number;
   readonly accumulatedEarnings: number;

@@ -24,6 +24,7 @@ describe('Property', () => {
     });
 
     propertyData = {
+      id: 'property-123',
       name: 'Corporate Tower',
       description: 'Office building',
       address,

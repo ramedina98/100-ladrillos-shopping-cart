@@ -8,6 +8,7 @@ describe('User Entity', () => {
 
   beforeAll(() => {
     userData = {
+      id: 'user-123',
       firstName: 'Juan',
       lastName: 'Pérez',
       email: 'example@email.com'

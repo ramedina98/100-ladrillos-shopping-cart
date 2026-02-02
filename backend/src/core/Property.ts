@@ -10,7 +10,7 @@ type PropertyType = 'OFFICE' | 'COMMERCIAL' | 'INDUSTRIAL';
 type RentalDistributionFrequency = 'MONTHLY' | 'QUARTERLY';
 
 interface PropertyData {
-  id?: string;
+  id: string;
   name: string;
   description: string;
   address: Address;
@@ -30,7 +30,7 @@ interface PropertyData {
 }
 
 class Property {
-  readonly id?: string;
+  readonly id: string;
   readonly name: string;
   readonly description: string;
   readonly address: Address;
