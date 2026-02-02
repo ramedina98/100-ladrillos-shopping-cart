@@ -1,3 +1,9 @@
-import UserError from './UserError.js';
+import InvalidRentalConfiguration from './InvalidRentalConfiguration.js';
+import MaxBricksReached from './MaxBricksReached.js';
+import PropertyError from './PropertyError.js';
 
-export { UserError };
+export {
+  InvalidRentalConfiguration,
+  MaxBricksReached,
+  PropertyError
+};
