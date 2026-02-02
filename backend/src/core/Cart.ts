@@ -65,6 +65,10 @@ class Cart {
     return this.items;
   }
 
+  getStatus(): CartStatus {
+    return this.status;
+  }
+
   removeBrick(brickId: string) {
     if (this.status !== 'ACTIVE') {
       throw new CartNotEditable();

@@ -9,8 +9,12 @@ import CartEmpty from './CartEmpty.js';
 import CartError from './CartError.js';
 import CartNotEditable from './CartNoEditable.js';
 import InvalidRentalConfiguration from './InvalidRentalConfiguration.js';
+import InvalidState from './InvalidState.js';
 import MaxBricksReached from './MaxBricksReached.js';
+import OrderError from './OrderError.js';
+import OrderNotConfirmed from './OrderNotConfirmed.js';
 import PropertyError from './PropertyError.js';
+import TermsNotAccepted from './TermsNotAccepted.js';
 
 export {
   BrickAlreadyInCart,
@@ -24,6 +28,10 @@ export {
   CartError,
   CartNotEditable,
   InvalidRentalConfiguration,
+  InvalidState,
   MaxBricksReached,
-  PropertyError
+  OrderError,
+  OrderNotConfirmed,
+  PropertyError,
+  TermsNotAccepted
 };
