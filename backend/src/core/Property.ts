@@ -25,8 +25,8 @@ interface PropertyData {
   hasRentalPool: boolean;
   estimatedDeliveryDate?: Date;
   rentalDistributionFrequency?: RentalDistributionFrequency;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 class Property {
