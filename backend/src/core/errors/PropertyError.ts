@@ -1,16 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-class UserError extends Error {
+class PropertyError extends Error {
   constructor(message: string, options?: ErrorOptions)
   constructor(options?: ErrorOptions)
   constructor(...args: any[]) {
     if (typeof args[0] === 'string') {
       super(...args);
     } else {
-      super('User error', ...args);
+      super('Property error', ...args);
     }
 
     this.name = this.constructor.name;
   }
 }
 
-export default UserError;
+export default PropertyError;
