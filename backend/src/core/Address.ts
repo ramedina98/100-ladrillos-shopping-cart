@@ -4,11 +4,8 @@ import {
   EmptyExteriorNumber,
   EmptyNeighborhood,
   EmptyState,
-  EmptyStreet,
-  InvalidPostalCode
+  EmptyStreet
 } from './ValidationErrors/index.js';
-
-const POSTAL_CODE_REGEX = /^[0-9]{5}$/;
 
 interface AddressData {
   street: string;
@@ -17,7 +14,7 @@ interface AddressData {
   neighborhood: string;
   city: string;
   state: string;
-  postalCode: string;
+  postalCode?: string;
   country: string;
 }
 
@@ -28,7 +25,7 @@ class Address {
   readonly neighborhood: string;
   readonly city: string;
   readonly state: string;
-  readonly postalCode: string;
+  readonly postalCode?: string;
   readonly country: string;
 
   constructor(props: AddressData) {
@@ -76,10 +73,6 @@ class Address {
 
     if (!this.country.trim()) {
       throw new EmptyCountry();
-    }
-
-    if (!POSTAL_CODE_REGEX.test(this.postalCode)) {
-      throw new InvalidPostalCode(this.postalCode);
     }
   }
 }

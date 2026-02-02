@@ -4,7 +4,6 @@ import EmptyExteriorNumber from './EmptyExteriorNumber.js';
 import EmptyNeighborhood from './EmptyNeighborhood.js';
 import EmptyState from './EmptyState.js';
 import EmptyStreet from './EmptyStreet.js';
-import InvalidPostalCode from './InvalidPostalCode.js';
 import ValidationError from './ValidationError.js';
 
 export default ValidationError;
@@ -14,6 +13,5 @@ export {
   EmptyExteriorNumber,
   EmptyNeighborhood,
   EmptyState,
-  EmptyStreet,
-  InvalidPostalCode
+  EmptyStreet
 };
