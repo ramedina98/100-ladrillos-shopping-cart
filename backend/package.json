@@ -1,0 +1,55 @@
+{
+  "name": "shopping_cart",
+  "version": "0.0.1",
+  "type": "module",
+  "license": "UNLICENSED",
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "dev": "nodemon -e 'ts yml' --exec 'node --loader ts-node/esm --enable-source-maps src/index.ts' tsc --noEmit",
+    "lint": "eslint",
+    "format": "eslint --fix",
+    "start": "node dist/index.js",
+    "test": "vitest",
+
+    "prisma:generate": "prisma generate --schema src/infrastructure/prisma/schema.prisma",
+    "prisma:migrate": "prisma migrate dev --schema src/infrastructure/prisma/schema.prisma",
+    "prisma:studio": "prisma studio --schema src/infrastructure/prisma/schema.prisma",
+    "prisma:validate": "prisma validate --schema src/infrastructure/prisma/schema.prisma",
+    "prisma:deploy": "prisma migrate deploy --schema src/infrastructure/prisma/schema.prisma"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.26.0",
+    "@types/express": "^5.0.1",
+    "@types/lodash.clonedeep": "^4.5.9",
+    "@types/morgan": "^1.9.9",
+    "@types/node": "^22.13.4",
+    "@types/sinon": "^21.0.0",
+    "@types/supertest": "^6.0.3",
+    "@types/swagger-ui-express": "^4.1.8",
+    "@types/uuid": "^11.0.0",
+    "eslint": "^9.20.1",
+    "globals": "^16.0.0",
+    "nock": "^14.0.4",
+    "nodemon": "^3.1.10",
+    "sinon": "^21.0.0",
+    "supertest": "^7.0.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.24.1",
+    "vitest": "^4.0.3"
+  },
+  "dependencies": {
+    "@prisma/client": "6",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^4.21.2",
+    "express-async-errors": "^3.1.1",
+    "lodash.clonedeep": "^4.5.0",
+    "morgan": "^1.10.0",
+    "prisma": "6",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
+    "uuid": "^13.0.0"
+  }
+}

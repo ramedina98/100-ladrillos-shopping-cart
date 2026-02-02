@@ -1,0 +1,200 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+}
+
+enum BrickStatus {
+  AVAILABLE
+  RESERVED
+  SOLD
+}
+
+enum CartStatus {
+  ACTIVE
+  CHECKOUT_STARTED
+  ABANDONED
+  CONVERTED
+}
+
+enum FundingStatus {
+  FUNDING
+  FUNDED
+  OPERATING
+}
+
+enum OrderStatus {
+  PENDING
+  TERMS_ACCEPTED
+  CONFIRMED
+  COMPLETED
+  FAILED
+}
+
+enum PropertyType {
+  OFFICE
+  COMMERCIAL
+  INDUSTRIAL
+}
+
+enum RentalDistributionFrequency {
+  MONTHLY
+  QUARTERLY
+}
+
+model User {
+  id              String   @id @default(uuid())
+  name            String
+  lastName        String
+  secondLastName  String?
+  email           String   @unique
+
+  bricks          Brick[]  @relation("UserBricks")
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model Property {
+  id                          String   @id @default(uuid())
+  name                        String
+  description                 String
+
+  street                      String
+  externalNumber              String
+  neighborhood                String
+  city                        String
+  country                     String
+
+  propertyType                PropertyType
+
+  totalBricks                 Int
+  brickBasePrice              Decimal  @db.Decimal(12,2)
+  currency                    String
+
+  estimatedDeliveryDate       DateTime?
+
+  fundingStatus               FundingStatus
+
+  annualReturnTarget          Decimal  @db.Decimal(5,2)
+  rentalYield                 Decimal  @db.Decimal(5,2)
+  appreciationTarget          Decimal  @db.Decimal(5,2)
+
+  hasRentalPool               Boolean
+  rentalDistributionFrequency RentalDistributionFrequency?
+
+  bricks                      Brick[]
+
+  createdAt                   DateTime @default(now())
+  updatedAt                   DateTime @updatedAt
+}
+
+model Brick {
+  id                   String      @id @default(uuid())
+
+  propertyId           String
+  property             Property    @relation(fields: [propertyId], references: [id])
+
+  currentOwnerId       String?
+  currentOwner         User?       @relation("UserBricks", fields: [currentOwnerId], references: [id])
+
+  price                Decimal     @db.Decimal(12,2)
+
+  status               BrickStatus @default(AVAILABLE)
+
+  ownershipPercentage  Decimal     @db.Decimal(5,4)
+
+  accumulatedEarnings  Decimal     @db.Decimal(12,2) @default(0)
+  lastPayoutDate       DateTime?
+
+  version              Int         @default(1)
+
+  createdAt            DateTime    @default(now())
+  updatedAt            DateTime    @updatedAt
+
+  @@index([propertyId])
+  @@index([currentOwnerId])
+  @@index([status])
+  @@index([id, version])
+}
+
+model Cart {
+  id         String      @id @default(uuid())
+
+  userId     String
+  user       User        @relation(fields: [userId], references: [id])
+
+  status     CartStatus  @default(ACTIVE)
+
+  items      CartItem[]
+
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+
+  @@index([userId])
+  @@unique([userId, status])
+}
+
+model CartItem {
+  id              String   @id @default(uuid())
+
+  cartId          String
+  cart            Cart     @relation(fields: [cartId], references: [id])
+
+  brickId         String
+  brick           Brick    @relation(fields: [brickId], references: [id])
+
+  priceAtAddTime  Decimal  @db.Decimal(12,2)
+
+  addedAt         DateTime @default(now())
+
+  @@unique([cartId, brickId])
+  @@index([brickId])
+}
+
+model Order {
+  id              String       @id @default(uuid())
+
+  userId          String
+  user            User         @relation(fields: [userId], references: [id])
+
+  status          OrderStatus  @default(PENDING)
+
+  items           OrderItem[]
+
+  totalAmount     Decimal      @db.Decimal(12,2)
+
+  termsAcceptedAt DateTime?
+  confirmedAt     DateTime?
+  completedAt     DateTime?
+
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+
+  @@index([userId])
+}
+
+model OrderItem {
+  id         String   @id @default(uuid())
+
+  orderId    String
+  order      Order    @relation(fields: [orderId], references: [id])
+
+  brickId    String
+  brick      Brick    @relation(fields: [brickId], references: [id])
+
+  finalPrice Decimal  @db.Decimal(12,2)
+
+  @@index([brickId])
+  @@unique([brickId])
+}
