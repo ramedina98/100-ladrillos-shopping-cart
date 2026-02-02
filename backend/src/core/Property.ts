@@ -90,4 +90,9 @@ class Property {
 }
 
 export default Property;
-export type { PropertyData };
+export type {
+  FundingStatus,
+  PropertyData,
+  PropertyType,
+  RentalDistributionFrequency
+};

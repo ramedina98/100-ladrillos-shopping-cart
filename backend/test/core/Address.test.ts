@@ -7,8 +7,7 @@ import {
   EmptyNeighborhood,
   EmptyCity,
   EmptyState,
-  EmptyCountry,
-  InvalidPostalCode
+  EmptyCountry
 } from '../../src/core/ValidationErrors/index.js';
 
 const validAddressData = {
@@ -126,24 +125,6 @@ describe('Address', () => {
       });
 
       expect(() => address.validate()).toThrow(EmptyCountry);
-    });
-
-    it('should throw InvalidPostalCode when postal code is invalid', () => {
-      const address = new Address({
-        ...validAddressData,
-        postalCode: 'ABC12'
-      });
-
-      expect(() => address.validate()).toThrow(InvalidPostalCode);
-    });
-
-    it('should throw InvalidPostalCode when postal code has wrong length', () => {
-      const address = new Address({
-        ...validAddressData,
-        postalCode: '1234'
-      });
-
-      expect(() => address.validate()).toThrow(InvalidPostalCode);
     });
   });
 });

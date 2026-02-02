@@ -78,6 +78,7 @@ model Property {
   externalNumber              String
   neighborhood                String
   city                        String
+  state                       String
   country                     String
 
   propertyType                PropertyType
