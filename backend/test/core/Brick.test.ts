@@ -28,12 +28,14 @@ describe('Brick', () => {
     });
 
     user = new User({
+      id: 'user-123',
       firstName: 'Juan',
       lastName: 'Pérez',
       email: 'example@email.com'
     });
 
     property = new Property({
+      id: 'property-123',
       name: 'Corporate Tower',
       description: 'Office building',
       address,
@@ -54,6 +56,7 @@ describe('Brick', () => {
   describe('Availability', () => {
     it('should return true only when AVAILABLE', () => {
       const brick = new Brick({
+        id: 'brick-123',
         property,
         status: 'AVAILABLE',
         ownershipPercentage: 0.01,
@@ -67,6 +70,7 @@ describe('Brick', () => {
 
     it('should return false when RESERVED or SOLD', () => {
       const reserved = new Brick({
+        id: 'brick-123',
         property,
         status: 'RESERVED',
         ownershipPercentage: 0.01,
@@ -76,6 +80,7 @@ describe('Brick', () => {
       });
 
       const sold = new Brick({
+        id: 'brick-123',
         property,
         status: 'SOLD',
         ownershipPercentage: 0.01,
@@ -93,6 +98,7 @@ describe('Brick', () => {
   describe('Reserve', () => {
     it('should change AVAILABLE to RESERVED', () => {
       const brick = new Brick({
+        id: 'brick-123',
         property,
         status: 'AVAILABLE',
         ownershipPercentage: 0.01,
@@ -107,6 +113,7 @@ describe('Brick', () => {
 
     it('should throw when not AVAILABLE', () => {
       const brick = new Brick({
+        id: 'brick-123',
         property,
         status: 'RESERVED',
         ownershipPercentage: 0.01,
@@ -122,6 +129,7 @@ describe('Brick', () => {
   describe('Release', () => {
     it('should change RESERVED → AVAILABLE', () => {
       const brick = new Brick({
+        id: 'brick-123',
         property,
         status: 'AVAILABLE',
         ownershipPercentage: 0.01,
@@ -138,6 +146,7 @@ describe('Brick', () => {
 
     it('should throw when not RESERVED', () => {
       const brick = new Brick({
+        id: 'brick-123',
         property,
         status: 'AVAILABLE',
         ownershipPercentage: 0.01,
@@ -153,6 +162,7 @@ describe('Brick', () => {
   describe('Sell', () => {
     it('should change RESERVED to SOLD and assigns owner', () => {
       const brick = new Brick({
+        id: 'brick-123',
         property,
         status: 'AVAILABLE',
         ownershipPercentage: 0.01,
@@ -172,6 +182,7 @@ describe('Brick', () => {
 
     it('should throw when not RESERVED', () => {
       const brick = new Brick({
+        id: 'brick-123',
         property,
         status: 'AVAILABLE',
         ownershipPercentage: 0.01,
@@ -187,6 +198,7 @@ describe('Brick', () => {
   describe('Ownership rules', () => {
     it('should throw when owner is requested but does not exist', () => {
       const brick = new Brick({
+        id: 'brick-123',
         property,
         status: 'AVAILABLE',
         ownershipPercentage: 0.01,
@@ -200,6 +212,7 @@ describe('Brick', () => {
 
     it('should validate fails when SOLD without owner', () => {
       const brick = new Brick({
+        id: 'brick-123',
         property,
         status: 'SOLD',
         ownershipPercentage: 0.01,
@@ -215,6 +228,7 @@ describe('Brick', () => {
   describe('Price rules', () => {
     it('shouldupdate price when AVAILABLE', () => {
       const brick = new Brick({
+        id: 'brick-123',
         property,
         status: 'AVAILABLE',
         ownershipPercentage: 0.01,
@@ -230,6 +244,7 @@ describe('Brick', () => {
 
     it('should throw when price updated during transaction', () => {
       const brick = new Brick({
+        id: 'brick-123',
         property,
         status: 'AVAILABLE',
         ownershipPercentage: 0.01,

@@ -1,5 +1,5 @@
 interface UserData {
-  id?: string;
+  id: string;
   firstName: string;
   lastName: string;
   secondLastName?: string;
@@ -9,7 +9,7 @@ interface UserData {
 }
 
 class User {
-  readonly id?: string;
+  readonly id: string;
   readonly email: string;
   readonly createdAt: Date;
   readonly updatedAt: Date;
