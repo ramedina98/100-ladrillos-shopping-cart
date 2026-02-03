@@ -2,6 +2,7 @@ import type {
   BricksRepository,
   CartsRepository,
   Database,
+  OrdersRepository,
   PropertiesRepository,
   UsersRepository
 } from '../../core/database/index.js';
@@ -12,6 +13,7 @@ import MemoryUserRepository from './MemoryUsersRepository.js';
 class MemoryDatabase implements Database {
   readonly bricks: BricksRepository;
   readonly carts: CartsRepository;
+  readonly orders: OrdersRepository;
   readonly properties: PropertiesRepository;
   readonly users: UsersRepository;
 

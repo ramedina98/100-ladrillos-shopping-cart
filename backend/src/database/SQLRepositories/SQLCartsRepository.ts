@@ -36,12 +36,11 @@ class SQLCartsRepository extends AbstractRepository implements CartsRepository {
   async createActiveCartForUser(userId: string): Promise<Cart> {
     try {
       const cart = await this.client.cart.create({
-        data: { userId, status: CartStatus.ACTIVE }
+        data: { userId, status: CartStatus.ACTIVE },
+        include: { user: true }
       });
 
-      const user = await this.database.users.findById(userId);
-
-      return CartSerializer.deserialize({ ...cart, items: [] }, user);
+      return CartSerializer.deserialize({ ...cart, items: [] });
     } catch (error) {
       throw new CouldNotCreateCart({ cause: error });
     }
@@ -55,7 +54,7 @@ class SQLCartsRepository extends AbstractRepository implements CartsRepository {
           status: CartStatus.ACTIVE
         },
         include: {
-          items: true
+          items: true, user: true
         }
       });
 
@@ -63,10 +62,10 @@ class SQLCartsRepository extends AbstractRepository implements CartsRepository {
         throw new CartNotFound(userId);
       }
 
-      const user = await this.database.users.findById(cart.userId);
-      const items = await this.hydrateItemsWithBricks(cart.items);
-
-      return CartSerializer.deserialize({ ...cart, items }, user);
+      return CartSerializer.deserialize({
+        ...cart,
+        items: await this.hydrateItemsWithBricks(cart.items)
+      });
     } catch (error) {
       if (error instanceof CartNotFound) {
         throw error;
