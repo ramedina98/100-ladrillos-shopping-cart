@@ -1,12 +1,13 @@
+import BrickNotAvailable from '../core/errors/BrickNotAvailable.js';
 import Cart from '../core/Cart.js';
 import CartNotFound from '../core/database/errors/CartNotFound.js';
 import Order from '../core/Order.js';
-import TermsNotAcceptedError from './errors/TermsNotAcceptedError.js';
-import ServiceError from './errors/ServiceError.js';
+import { OrderNotFound } from '../core/database/errors/index.js';
 import { Database } from '../core/database/Database.js';
 
+import TermsNotAcceptedError from './errors/TermsNotAcceptedError.js';
+import ServiceError from './errors/ServiceError.js';
 import { Service } from './Service.js';
-import BrickNotAvailable from '../core/errors/BrickNotAvailable.js';
 
 class CheckoutService implements Service {
   private database: Database;
@@ -49,6 +50,42 @@ class CheckoutService implements Service {
     });
 
     order.acceptTerms();
+
+    try {
+      return await this.database.orders.save(order);
+    } catch (error) {
+      throw new ServiceError({ cause: error });
+    }
+  }
+
+  async completeOrder(orderId: string): Promise<Order> {
+    let order: Order;
+
+    try {
+      order = await this.database.orders.findById(orderId);
+
+      order.confirmPurchase();
+    } catch (error) {
+      if (error instanceof OrderNotFound) {
+        throw error;
+      }
+
+      throw new ServiceError({ cause: error });
+    }
+
+    for (const item of order.getItems()) {
+      const brick = item.brick;
+
+      try {
+        brick.sold(order.user);
+
+        await this.database.bricks.saveWithVersion(brick);
+      } catch (error) {
+        throw new ServiceError({ cause: error });
+      }
+    }
+
+    order.complete();
 
     try {
       return await this.database.orders.save(order);
