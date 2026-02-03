@@ -1,7 +1,7 @@
 import Backend from './Backend.js';
 import EnvConfiguration from './EnvConfiguration.js';
-// import prisma from './infrastructure/prisma/prismaClient.js';
-import MemoryDatabase from './database/memoryRepositories/MemoryDatabase.js';
+import prisma from './infrastructure/prisma/prismaClient.js';
+import SQLDatabase from './database/SQLRepositories/SQLDatabase.js';
 import { SwaggerDocumentation } from './lib/documentation/index.js';
 import { ConsoleReporter } from './lib/errorReporter/index.js';
 
@@ -16,7 +16,7 @@ const env = environments.includes(
   : 'development';
 
 const config = new EnvConfiguration(env);
-const database = new MemoryDatabase();
+const database = new SQLDatabase(prisma);
 const documentation = new SwaggerDocumentation();
 const errorReporter = new ConsoleReporter();
 

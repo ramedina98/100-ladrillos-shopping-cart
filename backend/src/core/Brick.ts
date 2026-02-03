@@ -129,10 +129,6 @@ class Brick {
     if (this.status === 'SOLD' && !this.currentOwner) {
       throw new BrickHasNoOwner();
     }
-
-    if (this.status !== 'SOLD' && this.currentOwner) {
-      throw new BrickHasNoOwner();
-    }
   }
 
   private bumpVersion() {
