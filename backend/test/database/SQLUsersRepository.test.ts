@@ -1,6 +1,7 @@
-import { afterEach, beforeEach, describe, it, expect, vi } from 'vitest';
-import { PrismaClient } from '@prisma/client';
+import { afterEach, beforeEach, describe, it, expect, vi, afterAll } from 'vitest';
+import { PrismaClient } from '@prisma/client/extension';
 
+import prisma from '../../src/infrastructure/prisma/prismaClient.js';
 import SQLUsersRepository from '../../src/database/SQLRepositories/SQLUsersRepository.js';
 import User from '../../src/core/User.js';
 import {
@@ -11,17 +12,19 @@ import {
 } from '../../src/core/database/errors/index.js';
 
 describe('SQLUsersusersRepositorysitory', () => {
-  let prisma: PrismaClient;
   let usersRepository: SQLUsersRepository;
 
   beforeEach(async () => {
-    prisma = new PrismaClient();
     usersRepository = new SQLUsersRepository(prisma);
 
     await prisma.user.deleteMany();
   });
 
-  afterEach(async () => {
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
+  afterAll(async () => {
     await prisma.$disconnect();
   });
 

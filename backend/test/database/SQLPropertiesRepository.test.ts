@@ -1,12 +1,12 @@
-import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach, vi, afterAll } from 'vitest';
 import {
   FundingStatus,
-  PrismaClient,
   PropertyType,
   RentalDistributionFrequency
 } from '@prisma/client';
 
 import SQLPropertiesRepository from '../../src/database/SQLRepositories/SQLPropertiesRepository.js';
+import prisma from '../../src/infrastructure/prisma/prismaClient.js';
 import Property from '../../src/core/Property.js';
 import PropertySerializer from '../../src/database/serializers/PropertySerializer.js';
 import SerializerError from '../../src/database/serializers/errors/SerializerError.js';
@@ -17,12 +17,10 @@ import {
 import type { CreatePropertyData } from '../../src/core/database/PropertiesRepository.js';
 
 describe('SQLPropertiesRepository', () => {
-  let prisma: PrismaClient;
   let propertyData: CreatePropertyData;
   let propertiesRepository: SQLPropertiesRepository;
 
   beforeEach(async () => {
-    prisma = new PrismaClient();
     propertiesRepository = new SQLPropertiesRepository(prisma);
 
     await prisma.property.deleteMany();
@@ -50,10 +48,12 @@ describe('SQLPropertiesRepository', () => {
     };
   });
 
-  afterEach(async () => {
-    await prisma.$disconnect();
-
+  afterEach(() => {
     vi.restoreAllMocks();
+  });
+
+  afterAll(async () => {
+    await prisma.$disconnect();
   });
 
   describe('create()', () => {
