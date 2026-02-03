@@ -1,6 +1,7 @@
 import { Router } from 'express';
 
-import checkoutCart from './checkoutCart.js';
+import checkout from './checkout.js';
+import complete from './complete.js';
 import reviewOrder from './reviewOrder.js';
 
 const router = Router();
@@ -209,6 +210,75 @@ router.get('/:id', reviewOrder);
  *       500:
  *         description: Internal server error
  */
-router.post('/checkout', checkoutCart);
+router.post('/checkout', checkout);
+
+/**
+ * @swagger
+ * /api/v1/orders/{id}/complete:
+ *   post:
+ *     summary: Complete an order
+ *     description: Marks the order as CONFIRMED and COMPLETED. All bricks
+ *     in the order will be finalized as sold.
+ *     tags:
+ *       - Orders
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The ID of the order to complete
+ *     responses:
+ *       200:
+ *         description: Order successfully created
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                   format: uuid
+ *                 userId:
+ *                   type: string
+ *                   format: uuid
+ *                 totalAmount:
+ *                   type: number
+ *                 termsAcceptedAt:
+ *                   type: string
+ *                   format: date-time
+ *                 status:
+ *                   type: string
+ *                   enum: [PENDING, TERMS_ACCEPTED, CONFIRMED, COMPLETED, FAILED]
+ *                 properties:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       name:
+ *                         type: string
+ *                       bricks:
+ *                         type: array
+ *                         items:
+ *                           type: object
+ *                           properties:
+ *                             id:
+ *                               type: string
+ *                               format: uuid
+ *                               nullable: true
+ *                             brickId:
+ *                               type: string
+ *                               format: uuid
+ *                             propertyId:
+ *                               type: string
+ *                               format: uuid
+ *                             finalPrice:
+ *                               type: number
+ *       404:
+ *         description: Order not found
+ *       500:
+ *         description: Internal server error
+ */
+router.post('/:id/complete', complete);
 
 export default router;

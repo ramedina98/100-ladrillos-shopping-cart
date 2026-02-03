@@ -14,7 +14,7 @@ import type { Database } from '../../core/database/index.js';
 import type { Reporter } from '../../lib/errorReporter/index.js';
 import BrickNotAvailable from '../../core/errors/BrickNotAvailable.js';
 
-const checkoutCart = async (req: Request, res: Response) => {
+const checkout = async (req: Request, res: Response) => {
   const database = req.app.get('database') as Database;
   const errorReporter = req.app.get('errorReporter') as Reporter;
 
@@ -47,4 +47,4 @@ const checkoutCart = async (req: Request, res: Response) => {
   }
 };
 
-export default checkoutCart;
+export default checkout;
