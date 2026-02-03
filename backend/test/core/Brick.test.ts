@@ -177,7 +177,7 @@ describe('Brick', () => {
       brick.sold(buyer);
 
       expect(brick.getStatus()).to.be.equal('SOLD');
-      expect(brick.getCurrentOwnerName()).to.be.equal('Juan Pérez');
+      expect(brick.getCurrentOwner()).to.deep.equal(user);
     });
 
     it('should throw when not RESERVED', () => {
@@ -207,7 +207,7 @@ describe('Brick', () => {
         version: 1
       });
 
-      expect(() => brick.getCurrentOwnerName()).toThrow(BrickHasNoOwner);
+      expect(() => brick.getCurrentOwner()).toThrow(BrickHasNoOwner);
     });
 
     it('should validate fails when SOLD without owner', () => {

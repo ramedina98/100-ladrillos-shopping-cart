@@ -3,7 +3,7 @@ import { FundingStatus, PropertyType, RentalDistributionFrequency } from '@prism
 
 import Address from '../../../src/core/Address.js';
 import Property from '../../../src/core/Property.js';
-import PropertySerializer from '../../../src/database/serializers/PropertySerializer.js';;
+import PropertySerializer from '../../../src/database/serializers/PropertySerializer.js'; ;
 import { InvalidEnumValue } from '../../../src/database/serializers/errors/index.js';
 import { propertyDBData } from '../../../src/database/serializers/PropertySerializer.js';
 
@@ -46,7 +46,12 @@ describe('PropertySerializer', () => {
   });
 
   it('should handle null optional fields', () => {
-    const propertyData = { ...validProperty, estimatedDeliveryDate: null, rentalDistributionFrequency: null };
+    const propertyData = {
+      ...validProperty,
+      estimatedDeliveryDate: null,
+      rentalDistributionFrequency: null
+    };
+
     const property = PropertySerializer.deserialize(propertyData);
 
     expect(property.estimatedDeliveryDate).toBeUndefined();

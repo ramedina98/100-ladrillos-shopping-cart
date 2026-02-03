@@ -1,4 +1,5 @@
 import type {
+  BricksRepository,
   Database,
   PropertiesRepository,
   UsersRepository
@@ -8,6 +9,7 @@ import MemoryPropertiesRepository from './MemoryPropertiesRepository.js';
 import MemoryUserRepository from './MemoryUsersRepository.js';
 
 class MemoryDatabase implements Database {
+  readonly bricks: BricksRepository;
   readonly properties: PropertiesRepository;
   readonly users: UsersRepository;
 
