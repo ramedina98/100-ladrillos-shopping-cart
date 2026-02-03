@@ -1,6 +1,7 @@
 import { Router } from 'express';
 
 import addBrick from './addBrick.js';
+import removeBrick from './removeBrick.js';
 
 const router = Router();
 
@@ -78,5 +79,7 @@ const router = Router();
  *         description: Internal server error
  */
 router.post('/', addBrick);
+
+router.post('/remove-brick', removeBrick);
 
 export default router;

@@ -1,7 +1,7 @@
 import Brick from '../core/Brick.js';
 import Cart from '../core/Cart.js';
 import { BrickNotFound, CartNotFound } from '../core/database/errors/index.js';
-import { Database } from '../core/database/Database.js';
+import type { Database } from '../core/database/Database.js';
 
 import ServiceError from './errors/ServiceError.js';
 import { Service } from './Service.js';
