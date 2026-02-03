@@ -82,9 +82,9 @@ class Brick {
     this.currentOwner = newOwner;
   }
 
-  getCurrentOwner(): User {
+  getCurrentOwner(): User | null{
     if (!this.currentOwner) {
-      throw new BrickHasNoOwner();
+      return null;
     }
 
     return this.currentOwner;
@@ -126,11 +126,6 @@ class Brick {
     if (this.status === 'SOLD' && !this.currentOwner) {
       throw new BrickHasNoOwner();
     }
-  }
-
-  private bumpVersion() {
-    this.version += 1;
-    this.updatedAt = new Date();
   }
 }
 

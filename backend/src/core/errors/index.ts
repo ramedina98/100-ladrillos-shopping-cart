@@ -1,4 +1,5 @@
 import BrickAlreadyInCart from './BrickAlreadyInCart.js';
+import BrickAlreadyOwned from './BrickAlreadyOwned.js';
 import BrickError from './BrickError.js';
 import BrickHasNoOwner from './BrickHasNoOwner.js';
 import BrickNotAvailable from './BrickNotAvailable.js';
@@ -18,6 +19,7 @@ import TermsNotAccepted from './TermsNotAccepted.js';
 
 export {
   BrickAlreadyInCart,
+  BrickAlreadyOwned,
   BrickError,
   BrickHasNoOwner,
   BrickNotAvailable,

@@ -8,6 +8,7 @@ import User from '../../src/core/User.js';
 
 import {
   BrickAlreadyInCart,
+  BrickAlreadyOwned,
   BrickNotAvailableToAdd,
   CartEmpty,
   CartNotEditable
@@ -16,6 +17,8 @@ import {
 describe('Cart', () => {
   let cart: Cart;
   let brick: Brick;
+  let ownedBrick: Brick;
+  let reservedBrick: Brick;
   let property: Property;
   let user: User;
 
@@ -65,6 +68,28 @@ describe('Cart', () => {
       version: 1
     });
 
+    ownedBrick = new Brick({
+      id: 'brick-2',
+      property,
+      status: 'AVAILABLE',
+      ownershipPercentage: 0.01,
+      accumulatedEarnings: 0,
+      price: 1000,
+      version: 1,
+      currentOwner: user
+    });
+
+    reservedBrick = new Brick({
+      id: 'brick-3',
+      property,
+      status: 'AVAILABLE',
+      ownershipPercentage: 0.01,
+      accumulatedEarnings: 0,
+      price: 1000,
+      version: 1
+    });
+    reservedBrick.reserve();
+
     cart = new Cart({
       id: 'cart-1',
       user,
@@ -76,9 +101,9 @@ describe('Cart', () => {
     it('should add a brick to an active cart', () => {
       cart.addBrick(brick);
 
-      expect(cart.getItems().length).to.be.equal(1);
-      expect(cart.getItems()[0].brick).to.be.equal(brick);
-      expect(cart.totalAmount()).to.be.equal(1000);
+      expect(cart.getItems().length).toBe(1);
+      expect(cart.getItems()[0].brick).toBe(brick);
+      expect(cart.totalAmount()).toBe(1000);
     });
 
     it('should do not allow adding when cart is not ACTIVE', () => {
@@ -91,6 +116,10 @@ describe('Cart', () => {
       expect(() => nonEditableCart.addBrick(brick)).toThrow(CartNotEditable);
     });
 
+    it('should not allow adding a brick already owned by the user', () => {
+      expect(() => cart.addBrick(ownedBrick)).toThrow(BrickAlreadyOwned);
+    });
+
     it('should do not allow adding the same brick twice', () => {
       cart.addBrick(brick);
 
@@ -98,9 +127,7 @@ describe('Cart', () => {
     });
 
     it('should do not allow adding a brick that is not available', () => {
-      brick.reserve();
-
-      expect(() => cart.addBrick(brick)).toThrow(BrickNotAvailableToAdd);
+      expect(() => cart.addBrick(reservedBrick)).toThrow(BrickNotAvailableToAdd);
     });
   });
 
@@ -109,8 +136,8 @@ describe('Cart', () => {
       cart.addBrick(brick);
       cart.removeBrick(brick.id!);
 
-      expect(cart.getItems().length).to.be.equal(0);
-      expect(cart.totalAmount()).to.be.equal(0);
+      expect(cart.getItems().length).toBe(0);
+      expect(cart.totalAmount()).toBe(0);
     });
 
     it('should do not allow removing when cart is not ACTIVE', () => {
@@ -150,7 +177,7 @@ describe('Cart', () => {
   describe('totalAmount', () => {
     it('should calculate total from all cart items', () => {
       const brick2 = new Brick({
-        id: 'brick-2',
+        id: 'brick-4',
         property,
         status: 'AVAILABLE',
         ownershipPercentage: 0.02,
@@ -162,7 +189,7 @@ describe('Cart', () => {
       cart.addBrick(brick);
       cart.addBrick(brick2);
 
-      expect(cart.totalAmount()).to.be.equal(1500);
+      expect(cart.totalAmount()).toBe(1500);
     });
   });
 
@@ -170,11 +197,11 @@ describe('Cart', () => {
     it('should return true when brick exists in cart', () => {
       cart.addBrick(brick);
 
-      expect(cart.containsBrick(brick.id!)).to.be.equal(true);
+      expect(cart.containsBrick(brick.id!)).toBe(true);
     });
 
     it('should return false when brick is not in cart', () => {
-      expect(cart.containsBrick('other-id')).to.be.equal(false);
+      expect(cart.containsBrick('other-id')).toBe(false);
     });
   });
 });

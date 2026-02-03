@@ -196,20 +196,6 @@ describe('Brick', () => {
   });
 
   describe('Ownership rules', () => {
-    it('should throw when owner is requested but does not exist', () => {
-      const brick = new Brick({
-        id: 'brick-123',
-        property,
-        status: 'AVAILABLE',
-        ownershipPercentage: 0.01,
-        accumulatedEarnings: 0,
-        price: 1000,
-        version: 1
-      });
-
-      expect(() => brick.getCurrentOwner()).toThrow(BrickHasNoOwner);
-    });
-
     it('should validate fails when SOLD without owner', () => {
       const brick = new Brick({
         id: 'brick-123',

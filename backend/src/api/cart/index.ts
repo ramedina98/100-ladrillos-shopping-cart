@@ -80,6 +80,79 @@ const router = Router();
  */
 router.post('/', addBrick);
 
+/**
+ * @swagger
+ * /api/v1/cart/remove-brick:
+ *   post:
+ *     summary: Remove a brick from the user's cart
+ *     description: |
+ *       Removes a specific brick from the cart of a given user.
+ *       Returns the updated cart with its current status and properties.
+ *     tags:
+ *       - Cart
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - userId
+ *               - brickId
+ *             properties:
+ *               userId:
+ *                 type: string
+ *                 description: The ID of the user whose cart will be modified
+ *               brickId:
+ *                 type: string
+ *                 description: The ID of the brick to remove from the cart
+ *     responses:
+ *       200:
+ *         description: The updated cart after removing the brick
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                   description: The cart's unique identifier
+ *                 userId:
+ *                   type: string
+ *                   description: The ID of the user who owns the cart
+ *                 status:
+ *                   type: string
+ *                   enum: [ACTIVE, CHECKOUT_STARTED, COMPLETED]
+ *                   description: The current status of the cart
+ *                 properties:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                   description: Array of items (bricks) in the cart
+ *       404:
+ *         description: Cart not found for the given user
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 code:
+ *                   type: string
+ *                   example: CART_NOT_FOUND
+ *                 message:
+ *                   type: string
+ *                   example: Cart not found
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Internal server error
+ */
 router.post('/remove-brick', removeBrick);
 
 export default router;
