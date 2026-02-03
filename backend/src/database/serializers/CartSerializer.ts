@@ -46,7 +46,9 @@ class CartSerializer {
       createdAt: cart.createdAt,
       updatedAt: cart.updatedAt,
       items: cart.items.map(item => ({
-        ...item,
+        cartId: cart.id,
+        brick: item.brick,
+        addedAt: item.addedAt,
         priceAtAddTime: item.priceAtAddTime.toNumber()
       }))
     });
