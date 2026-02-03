@@ -13,19 +13,35 @@ interface CartItemsDB {
   addedAt: Date;
 }
 
+interface UserDB {
+  id: string;
+  firstName: string;
+  lastName: string;
+  secondLastName: string | null;
+  email: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 interface CartDBData {
   id: string;
   status: string;
   createdAt: Date;
   updatedAt: Date;
+  user: UserDB;
   items: CartItemsDB[];
 }
 
 class CartSerializer {
-  static deserialize(cart: CartDBData, user: User): Cart {
+  static deserialize(cart: CartDBData): Cart {
+    const user = new User({
+      ...cart.user,
+      secondLastName: cart.user.secondLastName ?? undefined
+    });
+
     return new Cart({
       id: cart.id,
-      user: user,
+      user,
       status: cart.status as CartStatus,
       createdAt: cart.createdAt,
       updatedAt: cart.updatedAt,

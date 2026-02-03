@@ -6,7 +6,7 @@ import type { OrderItems } from './OrderItems.js';
 type OrderStatus = 'PENDING' | 'TERMS_ACCEPTED' | 'CONFIRMED' | 'COMPLETED' | 'FAILED';
 
 interface OrderData {
-  id: string;
+  id?: string;
   user: User;
   status: OrderStatus;
   items: OrderItems[];
@@ -18,7 +18,7 @@ interface OrderData {
 }
 
 class Order {
-  readonly id: string;
+  readonly id?: string;
   readonly user: User;
   readonly totalAmount: number;
   readonly createdAt: Date;
@@ -76,8 +76,32 @@ class Order {
     this.status = 'FAILED';
   }
 
+  getConfirmedAt(): Date | null {
+    if (!this.confirmedAt) {
+      return null;
+    }
+
+    return this.confirmedAt;
+  }
+
+  getCompletedAt(): Date | null {
+    if (!this.completedAt) {
+      return null;
+    }
+
+    return this.completedAt;
+  }
+
   getItems(): OrderItems[] {
     return this.items;
+  }
+
+  getTermsAcceptedAt(): Date | null {
+    if (!this.termsAcceptedAt) {
+      return null;
+    }
+
+    return this.termsAcceptedAt;
   }
 
   getStatus(): OrderStatus {
