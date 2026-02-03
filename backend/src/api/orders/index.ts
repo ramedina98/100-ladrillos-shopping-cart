@@ -217,8 +217,7 @@ router.post('/checkout', checkout);
  * /api/v1/orders/{id}/complete:
  *   post:
  *     summary: Complete an order
- *     description: Marks the order as CONFIRMED and COMPLETED. All bricks
- *     in the order will be finalized as sold.
+ *     description: Marks the order as CONFIRMED and COMPLETED.
  *     tags:
  *       - Orders
  *     parameters:

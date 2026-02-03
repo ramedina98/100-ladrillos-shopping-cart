@@ -67,7 +67,7 @@ class SQLBricksRepository extends AbstractRepository implements BricksRepository
         data: {
           status: brick.getStatus(),
           price: brick.getPrice(),
-          currentOwnerId: brick.getCurrentOwner().id,
+          currentOwnerId: brick.getCurrentOwner()?.id ?? null,
           version: { increment: 1 },
           updatedAt: new Date()
         }

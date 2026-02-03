@@ -1,5 +1,6 @@
 import Brick from '../core/Brick.js';
 import Cart from '../core/Cart.js';
+import { BrickAlreadyOwned } from '../core/errors/index.js';
 import { BrickNotFound, CartNotFound } from '../core/database/errors/index.js';
 import type { Database } from '../core/database/Database.js';
 
@@ -44,6 +45,10 @@ class BrickCartService implements Service {
 
       return cart;
     } catch (error) {
+      if (error instanceof BrickAlreadyOwned) {
+        throw error;
+      }
+
       throw new ServiceError({ cause: error });
     }
   }
