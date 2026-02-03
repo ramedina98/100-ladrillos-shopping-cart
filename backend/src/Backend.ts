@@ -5,6 +5,7 @@ import 'express-async-errors';
 
 import type { Application } from 'express';
 
+import cartRouter from './api/cart/index.js';
 import Configuration from './Configuration.js';
 import errorHandler from './api/middlewares/errorHandler.js';
 import type { ApiDocumentation } from './lib/documentation/index.js';
@@ -65,7 +66,7 @@ class Backend {
   }
 
   private initializeRoutes(): void {
-    //
+    this.app.use('/api/v1/carts', cartRouter);
   }
 
   private initializeErrorHandler(): void {
