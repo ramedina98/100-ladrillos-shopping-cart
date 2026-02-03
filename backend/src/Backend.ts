@@ -5,12 +5,14 @@ import 'express-async-errors';
 
 import type { Application } from 'express';
 
-import cartRouter from './api/cart/index.js';
 import Configuration from './Configuration.js';
 import errorHandler from './api/middlewares/errorHandler.js';
 import type { ApiDocumentation } from './lib/documentation/index.js';
 import type { Database } from './core/database/Database.js';
 import type { Reporter } from './lib/errorReporter/index.js';
+
+import cartsRouter from './api/cart/index.js';
+import ordersRouter from './api/orders/index.js';
 
 class Backend {
   protected app: Application;
@@ -66,7 +68,8 @@ class Backend {
   }
 
   private initializeRoutes(): void {
-    this.app.use('/api/v1/carts', cartRouter);
+    this.app.use('/api/v1/carts', cartsRouter);
+    this.app.use('/api/v1/orders', ordersRouter);
   }
 
   private initializeErrorHandler(): void {
