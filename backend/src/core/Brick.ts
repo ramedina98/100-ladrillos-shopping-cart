@@ -85,12 +85,20 @@ class Brick {
     this.bumpVersion();
   }
 
-  getCurrentOwnerName(): string {
+  getCurrentOwner(): User {
     if (!this.currentOwner) {
       throw new BrickHasNoOwner();
     }
 
-    return this.currentOwner.getName();
+    return this.currentOwner;
+  }
+
+  getLastPayoutDate(): Date | null {
+    if (!this.lastPayoutDate) {
+      return null;
+    }
+
+    return this.lastPayoutDate;
   }
 
   getPrice(): number {
@@ -99,6 +107,14 @@ class Brick {
 
   getStatus(): BrickStatus {
     return this.status;
+  }
+
+  getVersion(): number {
+    return this.version;
+  }
+
+  getUpdatedAt(): Date {
+    return this.updatedAt;
   }
 
   updatePrice(newPrice: number) {
