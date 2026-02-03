@@ -3,6 +3,7 @@ import User from './User.js';
 import { CartItem } from './CartItem.js';
 import {
   BrickAlreadyInCart,
+  BrickAlreadyOwned,
   BrickNotAvailableToAdd,
   CartEmpty,
   CartNotEditable
@@ -49,6 +50,12 @@ class Cart {
 
     if (!brick.isAvailable()) {
       throw new BrickNotAvailableToAdd(brick.id, brick.getStatus());
+    }
+
+    const owner = brick.getCurrentOwner();
+
+    if (owner && owner.id === this.user.id) {
+      throw new BrickAlreadyOwned(brick.id);
     }
 
     this.items.push({
