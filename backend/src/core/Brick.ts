@@ -63,7 +63,6 @@ class Brick {
     }
 
     this.status = 'RESERVED';
-    this.bumpVersion();
   }
 
   release() {
@@ -72,7 +71,6 @@ class Brick {
     }
 
     this.status = 'AVAILABLE';
-    this.bumpVersion();
   }
 
   sold(newOwner: User): void {
@@ -82,7 +80,6 @@ class Brick {
 
     this.status = 'SOLD';
     this.currentOwner = newOwner;
-    this.bumpVersion();
   }
 
   getCurrentOwner(): User {
