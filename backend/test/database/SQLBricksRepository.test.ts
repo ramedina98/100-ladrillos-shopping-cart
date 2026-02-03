@@ -11,12 +11,12 @@ import {
 import {
   BrickStatus,
   FundingStatus,
-  PrismaClient,
   PropertyType,
   RentalDistributionFrequency
 } from '@prisma/client';
 
 import BrickSerializer from '../../src/database/serializers/BrickSerializer.js';
+import prisma from '../../src/infrastructure/prisma/prismaClient.js';
 import SQLBricksRepository from '../../src/database/SQLRepositories/SQLBricksRepository.js';
 import SQLDatabase from '../../src/database/SQLRepositories/SQLDatabase.js';
 import {
@@ -34,7 +34,6 @@ describe('SQLBricksRepository', () => {
   let property: Property;
   let user: User;
 
-  const prisma = new PrismaClient();
   beforeAll(async () => {
     database = new SQLDatabase(prisma);
   });

@@ -111,7 +111,6 @@ class SQLBricksRepository extends AbstractRepository implements BricksRepository
       throw new CouldNotFetchBrick( {cause: error });
     }
   }
-
 }
 
 export default SQLBricksRepository;
